@@ -1,4 +1,4 @@
-package com.apen.apen_demo;
+package com.apen.demo;
 
 import org.junit.Test;
 

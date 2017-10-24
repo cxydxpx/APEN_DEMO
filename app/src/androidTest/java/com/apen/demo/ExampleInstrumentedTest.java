@@ -1,4 +1,4 @@
-package com.apen.apen_demo;
+package com.apen.demo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
