@@ -97,6 +97,10 @@ public class MapActivity extends AppCompatActivity {
         mMapView.onPause();
     }
 
+
+    private MyLocationConfiguration.LocationMode mCurrentMode;
+    private BitmapDescriptor mCurrentMarker;
+
     /**
      * 位置监听器
      * BDLocationListener接口有1个方法需要实现： 1.接收异步返回的定位结果，参数是BDLocation类型参数。
@@ -108,10 +112,10 @@ public class MapActivity extends AppCompatActivity {
          * @param location
          */
         @Override
-        public void onReceiveLocation(BDLocation location) {
+        public void onReceiveLocation(BDLocation location) { // de
 
             //获取定位结果
-            location.getTime();    //获取定位时间
+            location.getTime();    //获取定位时间// 真机试一下没 试过了 我突然想起来 这是不是得动态权限啊
             location.getLocationID();    //获取定位唯一ID，v7.2版本新增，用于排查定位问题
             location.getLocType();    //获取定位类型
             location.getLatitude();    //获取纬度信息
@@ -121,7 +125,7 @@ public class MapActivity extends AppCompatActivity {
             location.getCountry();    //获取国家信息
             location.getCountryCode();    //获取国家码
             location.getCity();    //获取城市信息
-            location.getCityCode();    //获取城市码
+            location.getCityCode();    //获取城市码  一会儿扎着手
             location.getDistrict();    //获取区县信息
             location.getStreet();    //获取街道信息
             location.getStreetNumber();    //获取街道码
@@ -135,14 +139,16 @@ public class MapActivity extends AppCompatActivity {
             if (location == null) {
                 return;
             }
-            // 开启定位图层
+            // 开启定位图层  应该就是下面这段有问题 但是这是我从文档里搬出来的啊
             mBaiduMap.setMyLocationEnabled(true);
             // 构造定位数据
             MyLocationData locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(100).latitude(location.getLatitude())
-                    .longitude(location.getLongitude()).build();
+                    .direction(100)
+                    .latitude(location.getLatitude())
+                    .longitude(location.getLongitude())
+                    .build();
             // 设置定位数据
             mBaiduMap.setMyLocationData(locData);
             // 设置定位图层的配置（定位模式，是否允许方向信息，用户自定义定位图标）
@@ -152,14 +158,11 @@ public class MapActivity extends AppCompatActivity {
             MyLocationConfiguration config = new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker);
             mBaiduMap.setMyLocationConfiguration(config);
             // 当不需要定位图层时关闭定位图层
-            mBaiduMap.setMyLocationEnabled(false);
+//            mBaiduMap.setMyLocationEnabled(false);
 
-            mHepleLocation.start();
         }
 
     }
 
-    private MyLocationConfiguration.LocationMode mCurrentMode;
-    private BitmapDescriptor mCurrentMarker;
 
 }
