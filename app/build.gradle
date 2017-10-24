@@ -42,4 +42,6 @@ dependencies {
 //   图表
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 
+    compile 'com.github.imfms.simple-runtime-permission:simple-runtime-permission:v1.2.0'
+
 }

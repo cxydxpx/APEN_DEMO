@@ -1,5 +1,6 @@
 package com.apen.demo.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +17,17 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
+
+import cn.f_ms.runtimepermission.simple.PermissionRefuseResultHelper;
+import cn.f_ms.runtimepermission.simple.SimpleRuntimePermission;
+import cn.f_ms.runtimepermission.simple.SimpleRuntimePermissionHelper;
 
 /**
  * 作者 Y_MS
@@ -62,7 +71,26 @@ public class MapActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHepleLocation.start();
+
+                // 到底那个动态权限方便 我就知道这个show肯定有坑  点击确定的时候 把那个location里面的地址信息获取到是不是就可以了，恩，不过我们项目不授权动态权限也是可以拿到位置信息的
+
+
+                // 我断开啦 嗯呢啊
+                SimpleRuntimePermissionHelper.with(new SimpleRuntimePermission(MapActivity.this))
+                        .permission(Manifest.permission.ACCESS_FINE_LOCATION)
+                        .execute(new SimpleRuntimePermission.PermissionListener() {
+                            @Override
+                            public void onAllPermissionGranted() {
+                                mHepleLocation.start();
+                            }
+
+                            @Override
+                            public void onPermissionRefuse(PermissionRefuseResultHelper resultHelper) {
+
+                            }
+                        });
+
+
             }
         });
     }
@@ -147,7 +175,7 @@ public class MapActivity extends AppCompatActivity {
                     // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(100)
                     .latitude(location.getLatitude())
-                    .longitude(location.getLongitude())
+                    .longitude(location.getLongitude())  //
                     .build();
             // 设置定位数据
             mBaiduMap.setMyLocationData(locData);
@@ -160,9 +188,20 @@ public class MapActivity extends AppCompatActivity {
             // 当不需要定位图层时关闭定位图层
 //            mBaiduMap.setMyLocationEnabled(false);
 
+
+            LatLng cenpt = new LatLng(location.getLatitude(), location.getLongitude());
+            //定义地图状态
+            MapStatus mMapStatus = new MapStatus.Builder()
+                    .target(cenpt)
+                    .build();
+            //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+            MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+
+            //改变地图状态
+            mBaiduMap.setMapStatus(mMapStatusUpdate);
+
         }
 
     }
-
 
 }
