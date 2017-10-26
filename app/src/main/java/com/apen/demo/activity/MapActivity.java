@@ -5,26 +5,38 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.apen.demo.IApplication;
 import com.apen.demo.R;
+import com.apen.demo.adapter.MapAdapter;
 import com.apen.demo.helper.HelpeLocation;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.f_ms.runtimepermission.simple.PermissionRefuseResultHelper;
 import cn.f_ms.runtimepermission.simple.SimpleRuntimePermission;
 import cn.f_ms.runtimepermission.simple.SimpleRuntimePermissionHelper;
@@ -37,79 +49,105 @@ import cn.f_ms.runtimepermission.simple.SimpleRuntimePermissionHelper;
  * @author apen
  */
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity implements OnGetGeoCoderResultListener, BaiduMap.OnMapStatusChangeListener {
 
-    MapView mMapView = null;
+    private TextureMapView mMapView;
 
     private BaiduMap mBaiduMap;
 
     /**
-     * 初始化LocationClient 类
+     * 初始化LocationClient 定位端
      */
     public LocationClient mLocationClient = null;
+    /**
+     * 定位坐标
+     */
+    private LatLng locationLatLng;
+    /**
+     * 定位城市
+     */
+    private String city;
+    /**
+     * 反地理编码
+     */
+    private GeoCoder mSearch;
+
     private HelpeLocation mHepleLocation;
     private BDAbstractLocationListener mListener;
-    private Button mButton;
+
+    @BindView(R.id.main_pois)
+    ListView mListView;
+
+    private boolean mIsFirstLoc = true;
+
+    /**
+     * 定位模式
+     */
+    private MyLocationConfiguration.LocationMode mCurrentMode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_map);
-        //        //获取地图控件引用
-        mMapView = (MapView) findViewById(R.id.bmapView);
-        mBaiduMap = mMapView.getMap();
 
+        ButterKnife.bind(this);
+
+        //        //获取地图控件引用
+        mMapView = (TextureMapView) findViewById(R.id.main_bdmap);
+        mBaiduMap = mMapView.getMap();
 //        普通地图
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
 
+        //定义地图状态 改变地图缩放等级
+        MapStatus mMapStatus = new MapStatus.Builder().zoom(18).build();
+        MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+
+//        直接设置地图状态  设置地图显示范围
+//        mBaiduMap.setMapStatus(mMapStatusUpdate);
+//        采用动画的方式设置地图状态   设置地图显示范围
+        mBaiduMap.animateMapStatus(mMapStatusUpdate);
+
+        //地图状态改变相关监听
+        mBaiduMap.setOnMapStatusChangeListener(this);
+
+        // 开启定位图层
+        mBaiduMap.setMyLocationEnabled(true);
+
+        // 设置定位图层的配置（定位模式，是否允许方向信息，用户自定义定位图标）
+        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+        MyLocationConfiguration config = new MyLocationConfiguration(mCurrentMode, true, null);
+        mBaiduMap.setMyLocationConfiguration(config);
+
         mListener = new MyLocationListener();
+        mHepleLocation = ((IApplication) getApplication()).locationService;
 
+        // /获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+        mHepleLocation.registerListener(mListener);
 
-        mButton = (Button) findViewById(R.id.btn_location);
+        SimpleRuntimePermissionHelper.with(new SimpleRuntimePermission(MapActivity.this))
+                .permission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .execute(new SimpleRuntimePermission.PermissionListener() {
+                    @Override
+                    public void onAllPermissionGranted() {
+                        mHepleLocation.start();
+                    }
 
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    @Override
+                    public void onPermissionRefuse(PermissionRefuseResultHelper resultHelper) {
 
-                // 到底那个动态权限方便 我就知道这个show肯定有坑  点击确定的时候 把那个location里面的地址信息获取到是不是就可以了，恩，不过我们项目不授权动态权限也是可以拿到位置信息的
+                    }
+                });
 
-
-                // 我断开啦 嗯呢啊
-                SimpleRuntimePermissionHelper.with(new SimpleRuntimePermission(MapActivity.this))
-                        .permission(Manifest.permission.ACCESS_FINE_LOCATION)
-                        .execute(new SimpleRuntimePermission.PermissionListener() {
-                            @Override
-                            public void onAllPermissionGranted() {
-                                mHepleLocation.start();
-                            }
-
-                            @Override
-                            public void onPermissionRefuse(PermissionRefuseResultHelper resultHelper) {
-
-                            }
-                        });
-
-
-            }
-        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 // -----------location config ------------
-        mHepleLocation = ((IApplication) getApplication()).locationService;
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
-        mHepleLocation.registerListener(mListener);
+
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        mMapView.onDestroy();
-    }
 
     @Override
     protected void onResume() {
@@ -126,8 +164,94 @@ public class MapActivity extends AppCompatActivity {
     }
 
 
-    private MyLocationConfiguration.LocationMode mCurrentMode;
-    private BitmapDescriptor mCurrentMarker;
+    /**
+     * 地理编码查询结果回调函数
+     *
+     * @param result
+     */
+    @Override
+    public void onGetGeoCodeResult(GeoCodeResult result) {
+
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            //没有检索到结果
+        }
+        //获取地理编码结果
+    }
+
+    /**
+     * 反地理编码查询结果回调函数
+     *
+     * @param result
+     */
+    @Override
+    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            //没有检索到结果
+        } else {
+            final List<PoiInfo> poiInfos = result.getPoiList();
+            MapAdapter poiAdapter = new MapAdapter(MapActivity.this, poiInfos);
+            mListView.setAdapter(poiAdapter);
+
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    PoiInfo info = poiInfos.get(position);
+                    Toast.makeText(MapActivity.this, info.name, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+
+        }
+    }
+
+    /**
+     * 手势操作地图，设置地图状态等操作导致地图状态开始改变。
+     *
+     * @param status 地图状态改变开始时的地图状态
+     */
+    @Override
+    public void onMapStatusChangeStart(MapStatus status) {
+
+    }
+
+    /**
+     * 因某种操作导致地图状态开始改变。
+     *
+     * @param status 地图状态改变开始时的地图状态
+     * @param i      reason表示地图状态改变的原因，取值有：
+     *               1：用户手势触发导致的地图状态改变,比如双击、拖拽、滑动底图
+     *               2：SDK导致的地图状态改变, 比如点击缩放控件、指南针图标
+     *               3：开发者调用,导致的地图状态改变
+     */
+    @Override
+    public void onMapStatusChangeStart(MapStatus status, int i) {
+
+    }
+
+    /**
+     * 地图状态变化中
+     *
+     * @param status 当前地图状态
+     */
+    @Override
+    public void onMapStatusChange(MapStatus status) {
+
+    }
+
+    /**
+     * 地图状态改变结束
+     *
+     * @param status 地图状态改变结束后的地图状态
+     */
+    @Override
+    public void onMapStatusChangeFinish(MapStatus status) {
+        //地图操作的中心点
+        LatLng cenpt = status.target;
+//      发起地理编码检索
+        mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(cenpt));
+    }
 
     /**
      * 位置监听器
@@ -142,66 +266,81 @@ public class MapActivity extends AppCompatActivity {
         @Override
         public void onReceiveLocation(BDLocation location) { // de
 
-            //获取定位结果
-            location.getTime();    //获取定位时间// 真机试一下没 试过了 我突然想起来 这是不是得动态权限啊
-            location.getLocationID();    //获取定位唯一ID，v7.2版本新增，用于排查定位问题
-            location.getLocType();    //获取定位类型
-            location.getLatitude();    //获取纬度信息
-            location.getLongitude();    //获取经度信息
-            location.getRadius();    //获取定位精准度
-            location.getAddrStr();    //获取地址信息
-            location.getCountry();    //获取国家信息
-            location.getCountryCode();    //获取国家码
-            location.getCity();    //获取城市信息
-            location.getCityCode();    //获取城市码  一会儿扎着手
-            location.getDistrict();    //获取区县信息
-            location.getStreet();    //获取街道信息
-            location.getStreetNumber();    //获取街道码
-            location.getLocationDescribe();    //获取当前位置描述信息
-            location.getPoiList();    //获取当前位置周边POI信息
-
-            location.getBuildingID();    //室内精准定位下，获取楼宇ID
-            location.getBuildingName();    //室内精准定位下，获取楼宇名称
-            location.getFloor();    //室内精准定位下，获取当前位置所处的楼层信息
-
             if (location == null) {
                 return;
             }
-            // 开启定位图层  应该就是下面这段有问题 但是这是我从文档里搬出来的啊
-            mBaiduMap.setMyLocationEnabled(true);
+
             // 构造定位数据
             MyLocationData locData = new MyLocationData.Builder()
+                    //定位精度bdLocation.getRadius()
                     .accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(100)
+                    .direction(location.getDirection())
+                    //经度
                     .latitude(location.getLatitude())
-                    .longitude(location.getLongitude())  //
+                    //纬度
+                    .longitude(location.getLongitude())
                     .build();
             // 设置定位数据
             mBaiduMap.setMyLocationData(locData);
-            // 设置定位图层的配置（定位模式，是否允许方向信息，用户自定义定位图标）
-            mCurrentMarker = BitmapDescriptorFactory
-                    .fromResource(R.drawable.icon_marka);
-            mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-            MyLocationConfiguration config = new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker);
-            mBaiduMap.setMyLocationConfiguration(config);
-            // 当不需要定位图层时关闭定位图层
-//            mBaiduMap.setMyLocationEnabled(false);
 
+            //是否是第一次定位
+            if (mIsFirstLoc) {
+                mIsFirstLoc = false;
 
-            LatLng cenpt = new LatLng(location.getLatitude(), location.getLongitude());
-            //定义地图状态
-            MapStatus mMapStatus = new MapStatus.Builder()
-                    .target(cenpt)
-                    .build();
-            //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-            MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+                LatLng cenpt = new LatLng(location.getLatitude(), location.getLongitude());
+                //定义地图状态
+                MapStatus mMapStatus = new MapStatus.Builder()
+                        .target(cenpt)
+                        .build();
+                //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+                MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+                //改变地图状态
+                mBaiduMap.setMapStatus(mMapStatusUpdate);
 
-            //改变地图状态
-            mBaiduMap.setMapStatus(mMapStatusUpdate);
+            }
 
+            //获取坐标，待会用于POI信息点与定位的距离
+            locationLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+            //获取城市，待会用于POISearch
+            city = location.getCity();
+
+            //创建地理编码检索实例
+            mSearch = GeoCoder.newInstance();
+            //发起反地理编码请求(经纬度->地址信息)
+            ReverseGeoCodeOption reverseGeoCodeOption = new ReverseGeoCodeOption();
+            //设置反地理编码位置坐标
+            reverseGeoCodeOption.location(new LatLng(location.getLatitude(), location.getLongitude()));
+//            发起地理编码检索
+            mSearch.reverseGeoCode(reverseGeoCodeOption);
+
+            //设置查询结果监听者  地理编码检索监听者
+            mSearch.setOnGetGeoCodeResultListener(MapActivity.this);
         }
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        mMapView.onDestroy();
+
+        //退出时停止定位
+        mHepleLocation.stop();
+        //退出时关闭定位图层
+        mBaiduMap.setMyLocationEnabled(false);
+
+        // activity 销毁时同时销毁地图控件
+        mMapView.onDestroy();
+
+        //释放资源
+        if (mSearch != null) {
+            mSearch.destroy();
+        }
+
+        mMapView = null;
     }
 
 }
