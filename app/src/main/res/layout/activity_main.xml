@@ -34,6 +34,17 @@
                 android:layout_height="@dimen/dp_48"
                 android:text="地图"/>
 
+            <Button
+                android:id="@+id/btn_Proguard"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:text="忽略"/>
+
+            <Button
+                android:id="@+id/btn_glide"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:text="Glide"/>
 
 
         </LinearLayout>

@@ -43,9 +43,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.apen.demo.activity.ConstraintActivity"/>
-        <activity android:name="com.apen.demo.activity.MPAndroidChartActivity"/>
+        <activity android:name=".activity.ConstraintActivity"/>
+        <activity android:name=".activity.MPAndroidChartActivity"/>
         <activity android:name=".activity.MapActivity"/>
+        <activity android:name=".activity.GlideActivity"/>
 
         <!--百度地图 start-->
 

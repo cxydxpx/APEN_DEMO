@@ -1,5 +1,6 @@
 package com.apen.demo.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
@@ -18,7 +19,8 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-    @OnClick({R.id.btn_constraintLayout, R.id.btn_mpandroidchart, R.id.btn_map})
+    @OnClick({R.id.btn_constraintLayout, R.id.btn_mpandroidchart, R.id.btn_map,R.id.btn_Proguard,
+    R.id.btn_glide})
     public void click(View v) {
         switch (v.getId()) {
             case R.id.btn_constraintLayout:
@@ -29,6 +31,12 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_map:
                 startActivity(new Intent(MainActivity.this, MapActivity.class));
+                break;
+            case R.id.btn_Proguard:
+                startActivity(new Intent(this,ProguardActivity.class));
+                break;
+            case R.id.btn_glide:
+                startActivity(new Intent(this,GlideActivity.class));
                 break;
             default:
                 break;
