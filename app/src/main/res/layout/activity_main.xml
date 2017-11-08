@@ -46,6 +46,12 @@
                 android:layout_height="@dimen/dp_48"
                 android:text="Glide"/>
 
+            <Button
+                android:id="@+id/btn_zxing"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:text="二维码扫描"/>
+
 
         </LinearLayout>
     </ScrollView>

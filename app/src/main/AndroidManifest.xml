@@ -17,6 +17,7 @@
     <!-- 用于读取手机当前的状态-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <!-- 访问网络，网络定位需要上网-->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -44,9 +45,19 @@
         </activity>
 
         <activity android:name=".activity.ConstraintActivity"/>
+
         <activity android:name=".activity.MPAndroidChartActivity"/>
+
         <activity android:name=".activity.MapActivity"/>
+
         <activity android:name=".activity.GlideActivity"/>
+
+        <activity android:name=".activity.ScanActivity"/>
+
+        <activity
+            android:name=".activity.ZXingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <!--百度地图 start-->
 

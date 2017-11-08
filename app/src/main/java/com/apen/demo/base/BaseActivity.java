@@ -15,13 +15,18 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    protected static final String TAG = "TAG";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layoutResId());
-
         ButterKnife.bind(this);
+
+        init();
     }
+
+    protected void init(){}
 
     /**
      * 内容view
