@@ -18,27 +18,30 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-    @OnClick({R.id.btn_constraintLayout, R.id.btn_mpandroidchart, R.id.btn_map,R.id.btn_Proguard,
-    R.id.btn_glide,R.id.btn_zxing})
+    @OnClick({R.id.btn_constraintLayout, R.id.btn_mpandroidchart, R.id.btn_map,R.id.btn_proguard,
+    R.id.btn_glide,R.id.btn_zxing,R.id.btn_custom})
     public void click(View v) {
         switch (v.getId()) {
             case R.id.btn_constraintLayout:
-                startActivity(new Intent(MainActivity.this, ConstraintActivity.class));
+                startActivity(new Intent(this, ConstraintActivity.class));
                 break;
             case R.id.btn_mpandroidchart:
-                startActivity(new Intent(MainActivity.this, MPAndroidChartActivity.class));
+                startActivity(new Intent(this, MpAndroidChartActivity.class));
                 break;
             case R.id.btn_map:
-                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                startActivity(new Intent(this, MapActivity.class));
                 break;
-            case R.id.btn_Proguard:
+            case R.id.btn_proguard:
                 startActivity(new Intent(this,ProguardActivity.class));
                 break;
             case R.id.btn_glide:
                 startActivity(new Intent(this,GlideActivity.class));
                 break;
             case R.id.btn_zxing:
-                startActivity(new Intent(this,ZXingActivity.class));
+                startActivity(new Intent(this,ZxingActivity.class));
+                break;
+            case R.id.btn_custom:
+                startActivity(new Intent(this,CustomViewActivity.class));
                 break;
             default:
                 break;

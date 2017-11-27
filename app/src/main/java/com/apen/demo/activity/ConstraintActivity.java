@@ -1,8 +1,5 @@
 package com.apen.demo.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-
 import com.apen.demo.R;
 import com.apen.demo.base.BaseActivity;
 
@@ -10,6 +7,7 @@ import com.apen.demo.base.BaseActivity;
  * 作者 Y_MS
  * Created by ${APEN} on 2017-10-17.
  * GitHub：https://github.com/cxydxpx
+ * @author Administrator
  */
 
 public class ConstraintActivity extends BaseActivity {

@@ -35,7 +35,7 @@
                 android:text="地图"/>
 
             <Button
-                android:id="@+id/btn_Proguard"
+                android:id="@+id/btn_proguard"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:text="忽略"/>
@@ -51,6 +51,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:text="二维码扫描"/>
+
+            <Button
+                android:id="@+id/btn_custom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:text="自定义view"/>
 
 
         </LinearLayout>

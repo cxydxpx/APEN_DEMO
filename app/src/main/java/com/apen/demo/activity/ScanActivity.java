@@ -2,7 +2,6 @@ package com.apen.demo.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
@@ -19,6 +18,11 @@ import butterknife.OnClick;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者 Y_MS
@@ -55,6 +59,12 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mQRCodeView.startSpotAndShowRect();
+    }
+
+    @Override
     protected void onStop() {
         mQRCodeView.stopCamera();
         super.onStop();
@@ -62,6 +72,7 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
 
     @Override
     protected void onDestroy() {
+        mQRCodeView.stopSpotAndHiddenRect();
         mQRCodeView.onDestroy();
         super.onDestroy();
     }
@@ -83,8 +94,7 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
     public void onScanQRCodeOpenCameraError() {
         Log.e(TAG, "打开相机出错");
     }
-
-
+    
     private static final String EXTRA_SELECTED_IMAGES = "EXTRA_SELECTED_IMAGES";
 
     @Override
@@ -100,21 +110,37 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
             这里为了偷懒，就没有处理匿名 AsyncTask 内部类导致 Activity 泄漏的问题
             请开发在使用时自行处理匿名内部类导致Activity内存泄漏的问题，处理方式可参考 https://github.com/GeniusVJR/LearningNotes/blob/master/Part1/Android/Android%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%80%BB%E7%BB%93.md
              */
-            new AsyncTask<Void, Void, String>() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    return QRCodeDecoder.syncDecodeQRCode(picturePath);
-                }
+            Observable.just(QRCodeDecoder.syncDecodeQRCode(picturePath))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<String>() {
+                                   @Override
+                                   public void onSubscribe(Disposable disposable) {
 
-                @Override
-                protected void onPostExecute(String result) {
-                    if (TextUtils.isEmpty(result)) {
-                        Toast.makeText(ScanActivity.this, "未发现二维码", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(ScanActivity.this, result, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }.execute();
+                                   }
+
+                                   @Override
+                                   public void onNext(String result) {
+                                       if (TextUtils.isEmpty(result)) {
+                                           Log.d(TAG, "onNext: " + result);
+                                           Toast.makeText(ScanActivity.this, "未发现二维码", Toast.LENGTH_SHORT).show();
+                                       } else {
+                                           Log.d(TAG, "onNext: " + result);
+                                           Toast.makeText(ScanActivity.this, result, Toast.LENGTH_SHORT).show();
+                                       }
+                                   }
+
+                                   @Override
+                                   public void onError(Throwable throwable) {
+
+                                   }
+
+                                   @Override
+                                   public void onComplete() {
+
+                                   }
+                               }
+                    );
         }
     }
 
@@ -122,7 +148,7 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
     public void click(View v) {
         switch (v.getId()) {
             case R.id.start_spot:
-                mQRCodeView.startSpot();
+                mQRCodeView.startSpotAndShowRect();
                 Toast.makeText(this, "开始", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.stop_spot:
@@ -133,6 +159,4 @@ public class ScanActivity extends AppCompatActivity implements QRCodeView.Delega
                 break;
         }
     }
-
-
 }
