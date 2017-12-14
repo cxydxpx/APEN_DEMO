@@ -6,20 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <RelativeLayout
+    <com.apen.demo.custom.ILinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-        <ImageView
+        <com.apen.demo.custom.IButton
             android:id="@+id/btn_custom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@mipmap/baidumap_ico_poi_on"
+            android:layout_gravity="center"
+            android:text="button"
             />
 
-    </RelativeLayout>
-
+    </com.apen.demo.custom.ILinearLayout>
 </LinearLayout>

@@ -45,14 +45,33 @@ public class GlideActivity extends BaseActivity {
                  *      如果参数不为application UI线程会生成一个隐藏的fragment 将activity的生命周期与fragment绑定 且同步
                  *                              如果不为UI线程 强制走get(getApplication)
                  */
-                .with(this)
+                .with(this) // -- > RequestManager
                 /**
                  *  RequestManager  返回 DrawableTypeRequest
                  *
-                 * URL  load(url) --> fromString().load(string)
-                 *         DrawableTypeRequest <--  fromString() 会走loadGeneric() 生成streamModelLoader 并且创建 DrawableTypeRequest(streamModelLoader)  进行返回
+                 * URL  load(url) --> fromString()
+                 *                              .load(string)
+                 *
+                 *         DrawableTypeRequest <--  fromString() 会走loadGeneric()
+                 *              `                                     loadGeneric() 调用 Glide.buildStreamModelLoader()生成 ModelLoader用于加载图片
+                 *                                                                       Glide.buildFileDescriptorModelLoader()  生成 ModelLoader用于加载图片
+                 *                                                      生成streamModelLoader
+                 *
+                 *         并且创建 DrawableTypeRequest(streamModelLoader)  进行返回
                  *                              DrawableTypeRequest 两个方法 asBitmap() 强制指定位静态图片  生成BitmapTypeRequest 对象
                  *                                                            asGif() 强制指定为动态图片 生成GifTypeRequest对象
+                 *                               DrawableTypeRequest{
+                 *                                     if (transcoder == null) {
+                                                             transcoder = glide.buildTranscoder(resourceClass, transcodedClass);//用于对图片进行转码的
+                                                      }
+
+                                                     DataLoadProvider<ImageVideoWrapper, Z> dataLoadProvider = glide.buildDataProvider(ImageVideoWrapper.class,
+                                                     resourceClass);  // 用于对图片进行编解码的
+
+                                                     ImageVideoModelLoader<A> modelLoader = new ImageVideoModelLoader<A>(streamModelLoader,
+                                                     fileDescriptorModelLoader);
+                 *
+                 *                               }
                  *
                  * DrawableTypeRequest  返回  DrawableRequestBuilder
                  *
@@ -64,7 +83,7 @@ public class GlideActivity extends BaseActivity {
                  *                        diskCacheStrategy   return DrawableRequestBuilder
                  *                        into return Target<GlideDrawable>
                  */
-                .load(IMG_URL)
+                .load(IMG_URL) // -- > DrawableTypeRequest
                 /**
                  *  定义只能静态显示
                  *  .asBitmap()
@@ -81,29 +100,34 @@ public class GlideActivity extends BaseActivity {
 //                .override(200,200)
                 /**
                  * into
-                 *  DrawableRequestBuilder.into() 会走super.into() 父类GenericRequestBuilder的方法
+                 *  DrawableRequestBuilder.into()
+                 *         会走super.into() 父类 -- > GenericRequestBuilder的方法
                  *  一直走到glide 方法
                  *     Target buildImageViewTarget(){
                  *          ImageViewTargetFactory.buildTarget(imageview,class)
                  *                                                        class
                  *                                                          asBimap BitmapImageViewTarget
-                 *                                                          其他GlideDrawableImageViewTarget
+                 *                                                          其他  GlideDrawableImageViewTarget
                  *      }
-                 *  返回一个Target Target对象则是用来最终展示图片用的
+                 *  返回一个GlideDrawableImageViewTarget(Target) Target对象则是用来最终展示图片用的
                  *
-                 *  GenericRequestBuilder into() reture into(Target)
+                 *  GenericRequestBuilder
+                 *      into()
+                 *      reture into(Target)
                  *
                  *  into(target)
                  *       Request request = buildRequest(target);  //Request是用来发出加载图片请求
                  *
-                 *              接着会走 GenericRequest.obtain(target...)好多好多参数 生成GenericRequest对象
-                 *             GenericRequest.init() 做赋值
+                 *          生成Request 并且赋值
+                 *
+                 *       接着会走 GenericRequest.obtain(target...)好多好多参数 生成GenericRequest对象
+                 *         GenericRequest.init() 做赋值
                  *
                  *        requestTracker.runRequest(request);
                  *
                  *          GenericRequest.begin()
                  *                 if (model == null) {//如果传进去URL为null
-                 *                      onException(null);
+                 *                      onException(null); // 如果为null  会先使用占位符占位
                  *                      return;
                  *                  }
                  *
