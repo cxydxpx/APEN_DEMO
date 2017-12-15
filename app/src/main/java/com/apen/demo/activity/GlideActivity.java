@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import com.apen.demo.R;
 import com.apen.demo.base.BaseActivity;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import butterknife.BindView;
 
@@ -91,11 +90,11 @@ public class GlideActivity extends BaseActivity {
                  *  .asGif()
                  *  此处为占位图
                  */
-                .placeholder(R.mipmap.loading)
+//                .placeholder(R.mipmap.loading)
 //                错误时显示
-                .error(R.mipmap.baidumap_ico_poi_on)
+//                .error(R.mipmap.baidumap_ico_poi_on)
 //                取消占位图
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
 //                制定图片大小
 //                .override(200,200)
                 /**
@@ -140,8 +139,63 @@ public class GlideActivity extends BaseActivity {
                  *          onSizeReady 真正复杂的地方
                  *
                  *            ModelLoader<A, T> modelLoader = loadProvider.getModelLoader();
-                 */
+                 *
+                 *             engine 主要用来开启线程
+                 *             loadStatus = engine.load(signature, width, height, dataFetcher, loadProvider, transformation, transcoder,
+                 *                                      priority, isMemoryCacheable, diskCacheStrategy, this);
+                 *
+                 *              EngineRunnable
+                 *                               resource = decode() -->  decodeFromSource() --> decodeJob.decodeFromSource()
+                     *               DecodeJob        --> decodeFromSource
 
+                                    Resource<T(GifBitmapWrapper)> decoded = decodeSource()
+
+                                            --> fetcher(ImageVideoFetcher).loadData(priority)
+                                                                    return new ImageVideoWrapper(inputStream, fileDescriptor);
+                                            --> fetcher(HttpUrlFetcher).loadData()// 进行联网了
+                                                                    retrurn inputStream
+                                            decodeFromSourceData(imageVideoWrapper)
+                                                      decoded = loadProvider.getSourceDecoder().decode(data, width, height);
+                                                                loadProvider onSizeReady()方法中得到的FixedLoadProvider，
+                                                                getSourceDecoder()得到的则是一个GifBitmapWrapperResourceDecoder对象，
+                                                                也就是要调用这个对象的decode()方法来对图片进行解码
+                                                                 // 从服务器获取流 读取
+                                                            --> GifBitmapWrapperResourceDecoder.decodeStream()
+
+                                                                // 静态图 走decodeBitmapWrapper()
+                                                                         Resource<Bitmap> bitmapResource = bitmapDecoder.decode(toDecode, width, height);
+                                                                         if (bitmapResource != null) {
+                                                                                result = new GifBitmapWrapper(bitmapResource, null);
+                                                                         }
+                                                                         return result;
+
+                                                                <-- --> decodeBitmapWrapper()
+
+                                                                    bitmapDecoder(ImageVideoBitmapDecoder ).decode(toDecode, width, height);
+
+                                                                        //对服务器返回的InputStream的读取，以及对图片的加载全都在这里了。
+                                                                       <-- --> streamDecoder(StreamBitmapDecoder).decode(is, width, height);
+                                                                            BitmapResource.obtain()
+                                                                                return Resource</Bitmap>
+
+
+                                return transformEncodeAndTranscode(decoded);
+                                    -- > transcode(transformed);
+                                    //GifBitmapWrapperDrawableTranscoder 核心代码 转码
+                                    --> GifBitmapWrapperDrawableTranscoder.transcode(Resource<GifBitmapWrapper> toTranscode)
+                                            //GlideBitmapDrawableTranscoder
+                                                -->  public Resource<GlideBitmapDrawable> transcode(Resource<Bitmap> toTranscode) {
+                                                            GlideBitmapDrawable drawable = new GlideBitmapDrawable(resources, toTranscode.get());
+                                                              return new GlideBitmapDrawableResource(drawable, bitmapPool);
+                                                     }
+
+                        private void onLoadComplete(Resource resource) {
+                            manager(EngineJob).onResourceReady(resource);
+                        }
+
+                 *
+                 */
+                .skipMemoryCache(true)
                 .into(mImageView);
 
     }
