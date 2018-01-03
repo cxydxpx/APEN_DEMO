@@ -44,18 +44,31 @@
             </intent-filter>
 
 
-
         </activity>
 
-        <activity android:name=".activity.ConstraintActivity"/>
+        <activity
+            android:name=".activity.ConstraintActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.MpAndroidChartActivity"/>
+        <activity
+            android:name=".activity.MpAndroidChartActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.MapActivity"/>
+        <activity
+            android:name=".activity.MapActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.GlideActivity"/>
+        <activity
+            android:name=".activity.GlideActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.ScanActivity"/>
+        <activity
+            android:name=".activity.ScanActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.GestureActivity"
+            android:screenOrientation="landscape"/>
 
         <activity
             android:name=".activity.ZxingActivity"
@@ -63,6 +76,10 @@
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <activity android:name=".activity.CustomViewActivity"/>
+
+        <activity android:name=".activity.ServiceActivity"/>
+
+        <service android:name=".service.ServiceDemo"/>
 
         <!--百度地图 start-->
 
