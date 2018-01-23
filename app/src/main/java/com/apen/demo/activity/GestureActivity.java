@@ -30,14 +30,14 @@ public class GestureActivity extends BaseActivity implements GestureOverlayView.
 
     @OnClick(R.id.btn_submit)
     void click() {
-        Bitmap bitmap = mGesture.toBitmap(480, 750, 12, Color.BLACK);
+//        Bitmap bitmap = mGesture.toBitmap(1280, 512, 12, Color.BLACK);
 
-        Bitmap toBitmap = toBitmap(mGesture, 720, 1280, 12, Color.BLACK);
+        Bitmap bitmap = toBitmap(mGesture, 1280, 720, 12, Color.BLACK);
 
 
         mGestureView.setVisibility(View.GONE);
         mImageView.setVisibility(View.VISIBLE);
-        mImageView.setImageBitmap(toBitmap);
+        mImageView.setImageBitmap(bitmap);
     }
 
     @OnClick(R.id.btn_clear)
