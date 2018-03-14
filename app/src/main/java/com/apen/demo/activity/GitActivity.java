@@ -1,6 +1,5 @@
 package com.apen.demo.activity;
 
-import com.apen.demo.R;
 import com.apen.demo.base.BaseActivity;
 
 /**
@@ -12,6 +11,7 @@ import com.apen.demo.base.BaseActivity;
 public class GitActivity extends BaseActivity {
     @Override
     protected int layoutResId() {
-        return R.layout.activity_git;
+//        return R.layout.activity_git;
+        return 0;
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import com.apen.demo.R;
 import com.apen.demo.base.BaseActivity;
 import com.apen.demo.service.ServiceDemo;
+import com.apen.demo.tool.ToolToast;
 
 /**
  * 作者 Y_MS
@@ -60,6 +61,7 @@ public class ServiceActivity extends BaseActivity {
      * @param v
      */
     public void startService(View v) {
+        ToolToast.showToast("开启服务");
         startService(new Intent(this, ServiceDemo.class));
     }
 
@@ -69,6 +71,7 @@ public class ServiceActivity extends BaseActivity {
      * @param v
      */
     public void bindService(View v) {
+        ToolToast.showToast("绑定服务");
         bindService(new Intent(this, ServiceDemo.class), mServiceConnection, BIND_AUTO_CREATE);
     }
 
@@ -79,6 +82,7 @@ public class ServiceActivity extends BaseActivity {
      */
     public void unbindService(View v) {
         unbindService(mServiceConnection);
+        ToolToast.showToast("解除绑定");
     }
 
     /**
@@ -88,6 +92,7 @@ public class ServiceActivity extends BaseActivity {
      */
     public void stopService(View v) {
         stopService(new Intent(this, ServiceDemo.class));
+        ToolToast.showToast("停止服务");
     }
 
 

@@ -38,7 +38,6 @@ public class ServiceDemo extends Service {
         return mBinder;
     }
 
-
     public class MyBinder extends Binder {
 
         public void toastText() {

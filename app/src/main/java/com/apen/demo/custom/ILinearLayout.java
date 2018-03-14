@@ -27,6 +27,15 @@ public class ILinearLayout extends LinearLayout {
         initView(context);
     }
 
+    /**
+     * Configuration
+     * ViewConfiguration
+     * GestureDetector
+     * VelocityTracker
+     * Scroller
+     * ViewDragHelper
+     */
+
 
     private void initView(Context context) {
 
@@ -63,7 +72,7 @@ public class ILinearLayout extends LinearLayout {
      * disallowIntercept 默认为false 调用requestDisallowInterceptTouchEvent 设置
      * dispatchTouchEvent() 方法里 取反
      * if (disallowIntercept || !onInterceptTouchEvent(ev)) {
-     *      ev.setAction(MotionEvent.ACTION_DOWN);
+     * ev.setAction(MotionEvent.ACTION_DOWN);
      * }
      *
      * @param ev

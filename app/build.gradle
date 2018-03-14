@@ -18,6 +18,14 @@ android {
         }
     }
 
+    if (true){
+
+    }else {
+        
+    }
+
+
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -61,4 +69,5 @@ dependencies {
 // explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex.rxjava2:rxjava:2.1.5'
 
+    compile 'org.jetbrains:annotations-java5:15.0'
 }
