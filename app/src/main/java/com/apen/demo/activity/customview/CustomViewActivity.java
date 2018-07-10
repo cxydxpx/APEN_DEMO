@@ -29,13 +29,13 @@ public class CustomViewActivity extends BaseActivity {
     protected void init() {
         super.init();
         List<Float> yline=new ArrayList<Float>();
-        yline.add(2.420123f);
-        yline.add(2.444122f);
-        yline.add(2.45359f);
-        yline.add(2.4206f);
-        yline.add(2.4357f);
-        yline.add(2.4228f);
-        yline.add(2.4350f);
+        yline.add(2.420f);
+        yline.add(2.444f);
+        yline.add(2.453f);
+        yline.add(2.420f);
+        yline.add(2.435f);
+        yline.add(2.422f);
+        yline.add(2.435f);
         mCurveView.setDataY(yline);
     }
 }

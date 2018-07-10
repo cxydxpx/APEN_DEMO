@@ -29,9 +29,13 @@ public class MainActivity extends BaseActivity {
             R.id.btn_custom,
             R.id.btn_gesture,
             R.id.btn_service
+            , R.id.btn_test
     })
     public void click(View v) {
         switch (v.getId()) {
+            case R.id.btn_test:
+                startActivity(new Intent(this,TestActivity.class));
+                break;
             case R.id.btn_constraintLayout:
                 startActivity(new Intent(this, ConstraintActivity.class));
                 break;
@@ -57,7 +61,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, GestureActivity.class));
                 break;
             case R.id.btn_service:
-                startActivity(new Intent(this,ServiceActivity.class));
+                startActivity(new Intent(this, ServiceActivity.class));
                 break;
             default:
                 break;

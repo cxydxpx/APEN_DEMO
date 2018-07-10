@@ -1,16 +1,24 @@
+/**
+ * 构建配置中的第一行应用了Android插件 在这个构建中，让android块可以指定 针对android构建选项。
+ */
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
+
         applicationId "com.apen.demo"
-        minSdkVersion 16
-        targetSdkVersion 16
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    // 构建类型
     buildTypes {
         release {
             minifyEnabled false
@@ -18,10 +26,25 @@ android {
         }
     }
 
-    if (true){
+    flavorDimensions "default"
+//    // 产品风味
+    productFlavors {
+        // 正式版
+        official {
+            applicationId "com.apen.demo"
+        }
 
-    }else {
-        
+//        开发版
+        dev {
+            applicationId "com.apen.demo.dev"
+        }
+    }
+
+
+    if (true) {
+
+    } else {
+
     }
 
 
@@ -32,6 +55,7 @@ android {
         }
     }
 
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
@@ -70,4 +94,7 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.5'
 
     compile 'org.jetbrains:annotations-java5:15.0'
+    // 测试用例
+    dependencies { testCompile "org.mockito:mockito-core:2.+" }
+
 }
