@@ -4,37 +4,54 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="@dimen/dp_48">
 
-        <RelativeLayout
-            android:id="@+id/main_top_RL"
+        <AutoCompleteTextView
+            android:id="@+id/et_content"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="@dimen/dp_100"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
 
-            <com.baidu.mapapi.map.TextureMapView
-                android:id="@+id/main_bdmap"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:onClick="true"></com.baidu.mapapi.map.TextureMapView>
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/white"
+            android:text="搜索"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/sp_16"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@android:color/transparent"
-                android:src="@mipmap/baidumap_ico_poi_on" />
-        </RelativeLayout>
+    </RelativeLayout>
 
-        <ListView
-            android:id="@+id/main_pois"
+    <RelativeLayout
+        android:id="@+id/main_top_RL"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/main_bdmap"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"></ListView>
-    </LinearLayout>
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/baidumap_ico_poi_on"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/main_pois"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 
 </LinearLayout>

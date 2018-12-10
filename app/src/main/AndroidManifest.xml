@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.apen.demo">
+          package="com.apen.simple">
 
     <!--百度地图 start-->
 
@@ -36,7 +36,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.apen.demo.activity.MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -61,6 +61,9 @@
             android:name=".activity.MapActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.TestRxjavaActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".activity.GlideActivity"
             android:screenOrientation="portrait"/>
@@ -76,11 +79,18 @@
         <activity
             android:name=".activity.ZxingActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <activity android:name=".activity.TextSwitcherActivity"/>
 
         <activity android:name=".activity.customview.CustomViewActivity"/>
 
         <activity android:name=".activity.ServiceActivity"/>
+
+        <activity android:name=".activity.ViewPagerActivity"/>
+
+        <activity android:name=".activity.EventBusActivity"/>
+        <activity android:name=".activity.EventBus2Activity"/>
 
         <service android:name=".service.ServiceDemo"/>
 
@@ -88,7 +98,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="B1xbesGOKDwCdmlm9FH02O1S2oZ52HQ3"/>
+            android:value="XDVEgqy8t2ZeuypsclzhHZrPQMwkP3Km"/>
 
         <service
             android:name="com.baidu.location.f"

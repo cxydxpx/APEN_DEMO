@@ -3,16 +3,35 @@
  */
 apply plugin: 'com.android.application'
 
+
 android {
 
+    sourceSets{
+        main{
+            jniLibs.srcDir 'libs'
+            //说明so的路径为该libs路径，关联所有地图SDK的so文件
+        }
+    }
+
+    signingConfigs {
+        base {
+            keyAlias 'apen_test'
+            keyPassword 'hnn741'
+            storeFile file('F:/Android_SDK/Simple_apen/666/simple_apen.jks')
+            storePassword 'hnn741'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
 
-        applicationId "com.apen.demo"
+        applicationId "com.apen.simple"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+
+        buildToolsVersion '26.0.2'
+
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -31,70 +50,62 @@ android {
     productFlavors {
         // 正式版
         official {
-            applicationId "com.apen.demo"
+            applicationId "com.apen.simple"
+            signingConfig signingConfigs.base
+//            manifestPlaceholders = [
+                    // 百度地图的ak 测试版
+//                    BAIDU_MAP_API_AK: "KUk8iPu9eYBnh1FGUhB4W0mBGkken2Pc",
+////                    // 极光推送
+//                    JPUSH_PKGNAME   : "com.nongchuan.android.paycaptain" + getApplicationIdSuffix(),
+//                    //JPush上注册的包名对应的appkey
+//                    JPUSH_APPKEY    : "2969cfc7211cfc8784480698",
+
+//            ]
         }
 
 //        开发版
         dev {
-            applicationId "com.apen.demo.dev"
+            applicationId "com.apen.simple.dev"
         }
     }
-
-
-    if (true) {
-
-    } else {
-
-    }
-
-
-
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
-
-    buildToolsVersion '26.0.2'
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.1.2'
     testCompile 'junit:junit:4.12'
-
-//    注解
-    compile 'com.jakewharton:butterknife:8.6.0'
+    compile 'com.android.support:design:25.3.1'
+    //    注解
+    implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-
-//   图表
+    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    //    EventBus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //   图表
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
-
     compile 'com.github.imfms.simple-runtime-permission:simple-runtime-permission:v1.2.0'
-
     compile 'org.litepal.android:core:1.6.0'
-
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
     //  logger
     compile 'com.orhanobut:logger:1.15'
-
-//    二维码
+    //    二维码
     compile 'com.google.zxing:core:3.3.0'
     compile 'cn.bingoogolapple:bga-qrcodecore:1.1.9@aar'
     compile 'cn.bingoogolapple:bga-zxing:1.1.9@aar'
-
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-// Because RxAndroid releases are few and far between, it is recommended you also
-// explicitly depend on RxJava's latest version for bug fixes and new features.
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex.rxjava2:rxjava:2.1.5'
-
     compile 'org.jetbrains:annotations-java5:15.0'
     // 测试用例
-    dependencies { testCompile "org.mockito:mockito-core:2.+" }
 
+    compile 'com.blankj:utilcode:1.11.1'
+
+    dependencies { testCompile "org.mockito:mockito-core:2.+" }
 }

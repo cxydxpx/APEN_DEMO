@@ -5,34 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:layout_editor_absoluteY="81dp">
 
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="455dp"/>
 
-    <TextView
-        android:id="@+id/tv1"
+    <Button
+        android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hello world"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="hello world2"
-        app:layout_constraintLeft_toRightOf="@id/tv1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv1"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="hello world 3 "
-        app:layout_constraintBottom_toBottomOf="@id/tv1"
-        app:layout_constraintLeft_toRightOf="@id/tv1"
-        android:layout_marginLeft="25dp"
-        android:layout_marginBottom="0dp"/>
-
+        android:text="Button"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="455dp"/>
 </android.support.constraint.ConstraintLayout>
+    <!--居中时 偏差-->
+    <!--app:layout_constraintHorizontal_bias="0.4"-->
+    <!--居中显示-->
+    <!-- app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>-->
+    <!--button2的左侧到button的右侧的意思-->
+    <!--app:layout_constraintLeft_toRightOf="@+id/button"/>-->
+    <!--button2的右侧到父布局的右侧-->
+    <!--app:layout_constraintRight_toRightOf="parent"/>-->
+
+
