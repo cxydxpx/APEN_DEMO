@@ -17,9 +17,6 @@ import butterknife.BindView;
 
 public class CustomViewActivity extends BaseActivity {
 
-    @BindView(R.id.line)
-    CurveView mCurveView;
-
     @Override
     protected int layoutResId() {
         return R.layout.activity_custom_view;
@@ -28,6 +25,21 @@ public class CustomViewActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void initCur() {
         List<Float> yline=new ArrayList<Float>();
         yline.add(2.420f);
         yline.add(2.444f);

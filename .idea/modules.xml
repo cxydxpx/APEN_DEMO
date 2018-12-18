@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Simple_apen.iml" filepath="$PROJECT_DIR$/Simple_apen.iml" />
-      <module fileurl="file://$PROJECT_DIR$/clientapp/app.iml" filepath="$PROJECT_DIR$/clientapp/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/servicedemo/aidldemo.iml" filepath="$PROJECT_DIR$/servicedemo/aidldemo.iml" />
+      <module fileurl="file://F:\Android_SDK\Simple_apen\servicedemo\aidldemo.iml" filepath="F:\Android_SDK\Simple_apen\servicedemo\aidldemo.iml" />
+      <module fileurl="file://F:\Android_SDK\Simple_apen\clientapp\app.iml" filepath="F:\Android_SDK\Simple_apen\clientapp\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/clientapp/clientapp.iml" filepath="$PROJECT_DIR$/clientapp/clientapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/servicedemo/servicedemo.iml" filepath="$PROJECT_DIR$/servicedemo/servicedemo.iml" />
     </modules>
   </component>
 </project>
