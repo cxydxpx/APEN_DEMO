@@ -17,7 +17,6 @@ import android.view.View;
 
 import com.apen.simple.R;
 import com.apen.simple.base.BaseActivity;
-import com.apen.simple.tool.UserManager;
 import com.dofrom.android.aidldemo.IBookManager;
 
 import java.util.List;
@@ -40,7 +39,7 @@ public class ActivityTestActivity extends BaseActivity {
     @Override
     protected void init() {
         super.init();
-        Log.v(TAG, "  ActivityTestActivity  :  " + UserManager.sUserId);
+//        Log.v(tag, "  ActivityTestActivity  :  " + UserManager.sUserId);
     }
 
     Binder mBinder;
@@ -48,7 +47,7 @@ public class ActivityTestActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.v(TAG, "activityTestActivity onNewIntent执行");
+        Log.v(tag, "activityTestActivity onNewIntent执行");
     }
 
     public void actOnclick(View view) {
@@ -71,8 +70,8 @@ public class ActivityTestActivity extends BaseActivity {
             mIBookManager.addBook("添加一本书");
 
             List<String> newlist = mIBookManager.getBooks();
-            Log.v("TAG", "query list ,list type :" + newlist.getClass().getCanonicalName());
-            Log.v("TAG", "query list :" + newlist.toString());
+            Log.v("tag", "query list ,list type :" + newlist.getClass().getCanonicalName());
+            Log.v("tag", "query list :" + newlist.toString());
 
 
         } catch (RemoteException e) {
@@ -91,15 +90,15 @@ public class ActivityTestActivity extends BaseActivity {
             mIBookManager = IBookManager.Stub.asInterface(service);
             try {
                 List<String> list = mIBookManager.getBooks();
-                Log.v("TAG", "query list ,list type :" + list.getClass().getCanonicalName());
-                Log.v("TAG", "query list :" + list.toString());
+                Log.v("tag", "query list ,list type :" + list.getClass().getCanonicalName());
+                Log.v("tag", "query list :" + list.toString());
 
                 mIBookManager.addBook("《人家不值得》");
 
 
                 List<String> newlist = mIBookManager.getBooks();
-                Log.v("TAG", "query list ,list type :" + newlist.getClass().getCanonicalName());
-                Log.v("TAG", "query list :" + newlist.toString());
+                Log.v("tag", "query list ,list type :" + newlist.getClass().getCanonicalName());
+                Log.v("tag", "query list :" + newlist.toString());
 
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -147,7 +146,7 @@ public class ActivityTestActivity extends BaseActivity {
 
             switch (msg.what) {
                 case 2:
-                    Log.v("TAG", "receive msg from service : " + msg.getData().get("repor"));
+                    Log.v("tag", "receive msg from service : " + msg.getData().get("repor"));
                     break;
                 default:
                     super.handleMessage(msg);

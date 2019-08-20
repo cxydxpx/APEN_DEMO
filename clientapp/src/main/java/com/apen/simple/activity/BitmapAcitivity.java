@@ -49,7 +49,6 @@ public class BitmapAcitivity extends BaseActivity {
 //        Bitmap bitmap = decodeSampleBitmapFromSource(getResources(), R.mipmap.dlrb, 140, 180);
 //        mImageView.setImageBitmap(bitmap);
 
-
         initCache();
 
     }
@@ -162,7 +161,7 @@ public class BitmapAcitivity extends BaseActivity {
                 cachePath = getExternalCacheDir().getPath();  // /sdcard/Android/data/<application package>/cache
         } else {
             cachePath = getCacheDir().getPath(); // /data/data/<application package>/cache
-        }
+        }   
 
         return new File(cachePath + File.separator + fileName);
     }

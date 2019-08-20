@@ -7,7 +7,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
+import android.widget.Scroller;
 
 import com.apen.simple.tool.ToolMath;
 
@@ -20,7 +24,7 @@ import java.util.List;
  * GitHub：https://github.com/cxydxpx
  */
 
-public class CurveView extends View {
+public class CurveView extends View implements GestureDetector.OnGestureListener {
 
 
     private Paint mTextPaint, mLinePaint, mPathPaint, mPointPaint;
@@ -46,8 +50,11 @@ public class CurveView extends View {
     //底部文字
     private String[] day = {"07-01", "07-02", "07-03", "07-04", "07-05", "07-06", "07-07"};
 
+    private Context mContext;
+
     public CurveView(Context context) {
         super(context);
+        this.mContext = context;
         initView();
     }
 
@@ -100,9 +107,9 @@ public class CurveView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        onDrawRect(canvas);
-        onDrawLine(canvas);
-        canvasPath(canvas);
+//        onDrawRect(canvas);
+//        onDrawLine(canvas);
+//        canvasPath(canvas);
     }
 
     //绘制6个矩形
@@ -191,4 +198,104 @@ public class CurveView extends View {
         invalidate();
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        velocity(event);
+
+        GestureDetector gestureDetector = new GestureDetector(this);
+        // 解决屏幕长按后 无法拖动的现象
+        gestureDetector.setIsLongpressEnabled(false);
+
+        scrollTo(0,0);
+        scrollBy(0,0);
+
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    private Scroller mScroller = new Scroller(mContext);
+
+    @Override
+    public void computeScroll() {
+        if (mScroller.computeScrollOffset()) {
+            scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+            postInvalidate();
+        }
+    }
+
+    private void smoothScrollTo(int destX, int destY) {
+        int scrollX = getScrollX();
+        int delta = destX - scrollX;
+        // 1000ms内划向destX,效果就是慢慢滑动
+        mScroller.startScroll(scrollX, 0, delta, 0,1000);
+        invalidata();
+    }
+
+    private void velocity(MotionEvent event) {
+        VelocityTracker velocityTracker = VelocityTracker.obtain();
+        velocityTracker.addMovement(event);
+
+        // units时间内划过的像素数
+        velocityTracker.computeCurrentVelocity(1000);
+        float velocityX = velocityTracker.getXVelocity();
+        float velocityY = velocityTracker.getYVelocity();
+
+        // 清理
+        velocityTracker.clear();
+        velocityTracker.recycle();
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    /**
+     * 单击
+     *
+     * @param e
+     * @return
+     */
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    /**
+     * 滑动
+     *
+     * @param e1
+     * @param e2
+     * @param distanceX
+     * @param distanceY
+     * @return
+     */
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    /**
+     * 快速滑动
+     *
+     * @param e1
+     * @param e2
+     * @param velocityX
+     * @param velocityY
+     * @return
+     */
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
+    }
 }

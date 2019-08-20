@@ -70,7 +70,7 @@ public class GlideActivity extends BaseActivity {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fullFilename.getAbsoluteFile()));
             User mUser = (User) inputStream.readObject();
 
-            Log.v(TAG, mUser.toString());
+            Log.v(tag, mUser.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,7 +95,7 @@ public class GlideActivity extends BaseActivity {
         try {
             outputStream = new ObjectOutputStream(new FileOutputStream(fullFilename.getAbsoluteFile()));
             outputStream.writeObject(user);
-            Log.v(TAG, "序列化数据成功");
+            Log.v(tag, "序列化数据成功");
             outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -11,12 +11,13 @@ import butterknife.ButterKnife;
  * 作者 Y_MS
  * Created by ${APEN} on 2017-10-23.
  * GitHub：https://github.com/cxydxpx
+ *
  * @author Administrator
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected static final String TAG = "TAG";
+    protected static final String tag = "TAG";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(layoutResId());
         ButterKnife.bind(this);
 
-            init();
+        init();
     }
 
     @Override
@@ -32,7 +33,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    protected void init(){}
+    protected void init() {
+    }
 
     /**
      * 内容view

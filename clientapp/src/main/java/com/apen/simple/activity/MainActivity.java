@@ -1,12 +1,13 @@
 package com.apen.simple.activity;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
+import android.content.ActivityNotFoundException
+        ;
 import android.content.Intent;
 import android.view.View;
 
 import com.apen.simple.R;
-import com.apen.simple.activity.customview.CustomViewActivity;
+import com.apen.simple.activity.customview.SimpleViewActivity;
 import com.apen.simple.base.BaseActivity;
 import com.apen.simple.bean.SimpleBean;
 import com.apen.simple.tool.UserManager;
@@ -32,8 +33,9 @@ public class MainActivity extends BaseActivity {
 
         UserManager.sUserId = 2;
 
-//        Log.v(TAG, "  MainActivity  :  " + UserManager.sUserId);
+//        Log.v(tag, "  MainActivity  :  " + UserManager.sUserId);
     }
+
     @OnClick({
             R.id.btn_constraintLayout,
             R.id.btn_mpandroidchart,
@@ -49,14 +51,17 @@ public class MainActivity extends BaseActivity {
             R.id.btn_rxjava,
             R.id.btn_viewpager,
             R.id.btn_eventBus,
-            R.id.btn_activity
+            R.id.btn_activity,
+            R.id.btn_bitmap
 
     })
     public void click(View v) {
         switch (v.getId()) {
+            case R.id.btn_bitmap:
+                startActivity(new Intent(this,BitmapAcitivity.class));
+                break;
             case R.id.btn_activity:
-                startActivity(new Intent(this, ActivityTestActivity.class)
-                );
+                startActivity(new Intent(this, ActivityTestActivity.class));
                 break;
             case R.id.btn_eventBus:
                 startActivity(new Intent(this, EventBusActivity.class));
@@ -84,7 +89,6 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, MpAndroidChartActivity.class));
                 break;
             case R.id.btn_map:
-                startActivity(new Intent(this, MapActivity.class));
                 break;
             case R.id.btn_proguard:
                 startActivity(new Intent(this, ProguardActivity.class));
@@ -96,7 +100,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, ZxingActivity.class));
                 break;
             case R.id.btn_custom:
-                startActivity(new Intent(this, CustomViewActivity.class));
+                startActivity(new Intent(this, SimpleViewActivity.class));
                 break;
             case R.id.btn_gesture:
                 startActivity(new Intent(this, GestureActivity.class));
@@ -135,6 +139,10 @@ public class MainActivity extends BaseActivity {
 
         Spiciness mBean = Spiciness.HOT;
 
+    }
+
+    public void socket(View view) {
+        startActivity(new Intent(this, SocketActivity.class));
     }
 
     enum Spiciness {

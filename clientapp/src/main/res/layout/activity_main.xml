@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,7 +37,6 @@
                 android:id="@+id/btn_mpandroidchart"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_48"
-                android:layout_marginStart="8dp"
                 android:text="图表"
                 app:layout_constraintBottom_toTopOf="@+id/btn_map"
                 app:layout_constraintEnd_toEndOf="@+id/btn_constraintLayout"
@@ -51,7 +50,6 @@
                 android:id="@+id/btn_map"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_48"
-                android:layout_marginEnd="8dp"
                 android:text="地图"
                 app:layout_constraintBottom_toTopOf="@+id/btn_proguard"
                 app:layout_constraintEnd_toEndOf="@+id/btn_constraintLayout"
@@ -135,95 +133,56 @@
                 android:id="@+id/btn_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="service"
-                app:layout_constraintBottom_toTopOf="@+id/btn_test"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_gesture"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"/>
+                android:text="service"/>
 
             <Button
                 android:id="@+id/btn_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="测试用例"
-                app:layout_constraintBottom_toTopOf="@+id/btn_swicthtext"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_service"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"/>
+                android:text="测试用例"/>
 
             <Button
                 android:id="@+id/btn_swicthtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="滚动文字"
-                app:layout_constraintBottom_toTopOf="@+id/btn_rxjava"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_test"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"/>
+                android:text="滚动文字"/>
 
             <Button
                 android:id="@+id/btn_rxjava"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="仿制Rxjava"
-                app:layout_constraintBottom_toTopOf="@+id/btn_viewpager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_swicthtext"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"/>
+                android:text="仿制Rxjava"/>
 
             <Button
                 android:id="@+id/btn_viewpager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="ViewPager"
-                app:layout_constraintBottom_toTopOf="@+id/btn_eventBus"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_rxjava"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"/>
+                android:text="ViewPager"/>
 
             <Button
                 android:id="@+id/btn_eventBus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="EventBus"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/btn_viewpager"
-                app:layout_constraintTop_toBottomOf="@+id/btn_viewpager"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"/>
+                android:text="EventBus"/>
 
             <Button
                 android:id="@+id/btn_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="activityTest"
-                app:layout_constraintEnd_toEndOf="@+id/btn_eventBus"
-                app:layout_constraintStart_toStartOf="@+id/btn_viewpager"
-                tools:layout_editor_absoluteY="624dp"/>
+                android:text="activityTest"/>
 
-        </android.support.constraint.ConstraintLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="socket"
+                android:text="Socket"/>
+
+            <Button
+                android:id="@+id/btn_bitmap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bitmap"/>
+
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

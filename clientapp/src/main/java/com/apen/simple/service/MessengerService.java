@@ -28,7 +28,7 @@ public class MessengerService extends Service {
 
             switch (msg.what) {
                 case from_client:
-                    Log.v("TAG", "receive msg from client : " + msg.getData().get("msg"));
+                    Log.v("tag", "receive msg from client : " + msg.getData().get("msg"));
 
                     Messenger client = msg.replyTo;
 

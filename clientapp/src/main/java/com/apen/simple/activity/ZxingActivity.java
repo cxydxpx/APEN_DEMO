@@ -31,7 +31,7 @@ public class ZxingActivity extends AppCompatActivity {
         startActivity(new Intent(this, ScanActivity.class));
     }
 
-    protected static final String TAG = "TAG";
+    protected static final String TAG = "tag";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {

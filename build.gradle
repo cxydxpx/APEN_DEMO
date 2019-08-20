@@ -4,7 +4,6 @@
  * 例如，这个block包含了Android插件 Gradle作为一种依赖关系因为它提供了额外的指令等级 需要建立Android应用模块。
  */
 buildscript {
-
     /**
      * 存储库块配置存储库Gradle所使用的存储库 搜索或下载依赖项。
      Gradle预配置远程支持 像JCenter、Maven Central和Ivy这样的存储库。
@@ -22,7 +21,7 @@ buildscript {
      下面一行为Gradle添加了Android插件 版本3.1.0作为类路径依赖
      */
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.4.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -52,8 +51,9 @@ task clean(type: Delete) {
 ext {
 
     compileSdkVersion = 26
-    buildToolsVersion = '26.0.2'
+    buildToolsVersion = '28.0.3'
     minSdkVersion = 16
-    targetSdkVersion = 25
+    targetSdkVersion = 26
 
+    supportLibVersion = "25.3.1"
 }

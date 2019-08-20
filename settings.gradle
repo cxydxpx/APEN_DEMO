@@ -1,1 +1,1 @@
-include ':clientapp', ':servicedemo'
+include ':servicedemo', ':clientapp', ':okhttpsimple', ':osssimple', ':jsbridgedemo', ':proguarddemo'

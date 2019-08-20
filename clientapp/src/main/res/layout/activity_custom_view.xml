@@ -5,17 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<com.apen.demo.custom.CustomView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"/>-->
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:layout_margin="50dp"
+        android:background="@color/black">
 
 
-    <com.apen.simple.custom.CurveView
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="200dip"
-        android:layout_marginBottom="10dip"
-        android:layout_marginTop="10dip"
-        android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <com.apen.simple.custom.CustomView
+        android:id="@+id/tv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:background="@color/colorAccent"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showLocation"
+        android:text="显示坐标"/>
+
 
 </LinearLayout>

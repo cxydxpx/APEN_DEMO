@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.apen.simple.custom.OnTouchParentView
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.apen.simple.custom.OnTouchChildView
+            android:id="@+id/child"
+            android:layout_width="110dp"
+            android:layout_height="100dp"
+            android:background="@color/ff_2a4b"/>
+
+    </com.apen.simple.custom.OnTouchParentView>
+
+</LinearLayout>

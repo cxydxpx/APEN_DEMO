@@ -73,7 +73,7 @@ public class ServiceActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.v(TAG, " ServiceActivity onCreate ");
+        Log.v(tag, " ServiceActivity onCreate ");
 
     }
 
@@ -81,37 +81,37 @@ public class ServiceActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
-         Log.v(TAG," ServiceActivity onStart ");
+         Log.v(tag," ServiceActivity onStart ");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-         Log.v(TAG," ServiceActivity onResume ");
+         Log.v(tag," ServiceActivity onResume ");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-         Log.v(TAG," ServiceActivity onPause ");
+         Log.v(tag," ServiceActivity onPause ");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-         Log.v(TAG," ServiceActivity onStop ");
+         Log.v(tag," ServiceActivity onStop ");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-         Log.v(TAG," ServiceActivity onDestroy ");
+         Log.v(tag," ServiceActivity onDestroy ");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-         Log.v(TAG," ServiceActivity onRestart ");
+         Log.v(tag," ServiceActivity onRestart ");
     }
 
     /**

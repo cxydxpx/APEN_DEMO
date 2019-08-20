@@ -1,7 +1,13 @@
 package com.apen.simple.activity;
 
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
+
 import com.apen.simple.R;
 import com.apen.simple.base.BaseActivity;
+
+import butterknife.BindView;
 
 /**
  * 作者 Y_MS
@@ -13,6 +19,8 @@ import com.apen.simple.base.BaseActivity;
 
 public class ConstraintActivity extends BaseActivity {
 
+    @BindView(R.id.tv)
+    TextView mTextView;
 
     /**
      * 学习
@@ -35,48 +43,27 @@ public class ConstraintActivity extends BaseActivity {
         return R.layout.activity_constraint;
     }
 
-//    static class TempClass {
-//        public TempClass() {
-//            Logger.v("TempClass: new instance");
-//        }
-//    }
-//
-//    static class StaticMemberClass {
-//        static TempClass tempClass = new TempClass();
-//    }
-
     @Override
     protected void init() {
         super.init();
 
-//        Logger.v("ConstraintActivity this -- " + this + " -      " + this.isFinishing());
-//        mTextView2.setText(ToolMobileInfo.getIMEI(this) + " -- " + ToolMobileInfo.getMacAddress());
-//        what();
-//        eventI();
-    }
+        mTextView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
 
-    private void eventI() {
-//        EventBus.getDefault().register(this);
     }
-
-//    private void what() {
-//        Exception m;
-//
-//        try {
-//            Logger.v("->run start");
-//
-//            int sleepSeconds = new Random().nextInt(5) + 1;
-//
-//            Logger.v("sleeping: " + sleepSeconds);
-//
-//            Thread.sleep(sleepSeconds);
-//
-//            TempClass tempClass = StaticMemberClass.tempClass;
-//
-//            Logger.v("<-run end");
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 }

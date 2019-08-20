@@ -2,13 +2,8 @@ package com.apen.simple;
 
 import android.app.ActivityManager;
 import android.app.Application;
-import android.app.Service;
 import android.content.Context;
 import android.os.Vibrator;
-
-import com.apen.simple.helper.HelpeLocation;
-import com.baidu.mapapi.SDKInitializer;
-import com.blankj.utilcode.util.Utils;
 
 import java.util.List;
 
@@ -22,24 +17,13 @@ import java.util.List;
 
 public class IApplication extends Application {
 
-    public HelpeLocation locationService;
     public Vibrator mVibrator;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-//        String processName = getProcessName(getApplicationContext(), android.os.Process.myPid());
-
-//        Log.v("TAG","application start process name : " + processName);
-
-        Utils.init(this);
-        /***
-         * 初始化定位sdk，建议在Application中创建
-         */
-        locationService = new HelpeLocation(getApplicationContext());
-        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-        SDKInitializer.initialize(this);
+//        Utils.init(this);
     }
 
     private static IApplication instance;

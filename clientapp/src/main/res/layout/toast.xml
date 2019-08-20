@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
         android:layout_marginTop="@dimen/dp_12"
-        android:background="@color/transparent_60">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_toast"
