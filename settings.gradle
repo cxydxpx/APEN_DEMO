@@ -1,1 +1,1 @@
-include ':servicedemo', ':clientapp', ':okhttpsimple', ':osssimple', ':jsbridgedemo', ':proguarddemo'
+include ':servicedemo', ':clientapp', ':okhttpsimple', ':osssimple', ':jsbridgedemo', ':proguarddemo', ':recyclerviewheaderdemo', ':constraintviewdemo'

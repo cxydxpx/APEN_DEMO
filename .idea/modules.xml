@@ -4,10 +4,12 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Simple_apen.iml" filepath="$PROJECT_DIR$/Simple_apen.iml" />
       <module fileurl="file://$PROJECT_DIR$/clientapp/clientapp.iml" filepath="$PROJECT_DIR$/clientapp/clientapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/constraintviewdemo/constraintviewdemo.iml" filepath="$PROJECT_DIR$/constraintviewdemo/constraintviewdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/jsbridgedemo/jsbridgedemo.iml" filepath="$PROJECT_DIR$/jsbridgedemo/jsbridgedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttpsimple/okhttpsimple.iml" filepath="$PROJECT_DIR$/okhttpsimple/okhttpsimple.iml" />
       <module fileurl="file://$PROJECT_DIR$/osssimple/osssimple.iml" filepath="$PROJECT_DIR$/osssimple/osssimple.iml" />
       <module fileurl="file://$PROJECT_DIR$/proguarddemo/proguarddemo.iml" filepath="$PROJECT_DIR$/proguarddemo/proguarddemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recyclerviewheaderdemo/recyclerviewheaderdemo.iml" filepath="$PROJECT_DIR$/recyclerviewheaderdemo/recyclerviewheaderdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/servicedemo/servicedemo.iml" filepath="$PROJECT_DIR$/servicedemo/servicedemo.iml" />
     </modules>
   </component>

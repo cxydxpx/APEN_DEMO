@@ -1,24 +1,9 @@
-package com.apen.simple.activity;
+package com.example.constraintviewdemo;
 
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-import com.apen.simple.R;
-import com.apen.simple.base.BaseActivity;
-
-import butterknife.BindView;
-
-/**
- * 作者 Y_MS
- * Created by ${APEN} on 2017-10-17.
- * GitHub：https://github.com/cxydxpx
- *
- * @author Administrator
- */
-
-public class ConstraintActivity extends BaseActivity {
-
-    @BindView(R.id.tv)
-    TextView mTextView;
+public class MainActivity extends AppCompatActivity {
 
     /**
      * 学习
@@ -35,17 +20,9 @@ public class ConstraintActivity extends BaseActivity {
      *
      * @return
      */
-
     @Override
-    protected int layoutResId() {
-        return R.layout.activity_constraint;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
     }
-
-    @Override
-    protected void init() {
-        super.init();
-
-
-    }
-
 }
